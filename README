@@ -1,0 +1,8 @@
+Author: Vincent Siles <vincent.siles@ens-lyon.org>
+        Hugo Herbelin <hugo.herbelin@inria.fr>
+
+Formalization of the proof that PTS and PTSe are equivalent.
+Tested with Coq 8.3
+
+INSTALL:
+use "coq_makefile -f Make" to compile

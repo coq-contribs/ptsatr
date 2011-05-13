@@ -1,0 +1,18 @@
+Name: PTSATR
+Title: PTSATR
+Url: http://www.lix.polytechnique.fr/~vsiles/coq/PTSATR.html
+Description: Formalization of the proof that PTS and PTS with judgmental equality (PTSe) are equivalent.
+With this equivalence, we are able to derive all the meta-theory of PTSe, like Pi-injectivity or Subject Reduction.
+Keywords: Pure Type Systems, Judgmental Equality, Chruch-Rosser, Confluence, Subject Reduction, Pi Injectivity
+Category: Mathematics/Logic/Type theory
+Author: Vincent Siles
+Email: vincent.siles@ens-lyon.org
+Homepage: http://www.lix.polytechnique.fr/~vsiles
+Institution: Ecole Polytechnique - PPS
+Author: Hugo Herbelin
+Email: hugo.herbelin@inria.fr
+Homepage: http://pauillac.inria.fr/~herbelin/
+Institution: INRIA - PPS
+Require: 
+License: LGPL
+

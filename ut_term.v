@@ -10,6 +10,8 @@ Require Import Minus.
 Require Import Bool.
 Require Import base.
 
+Unset Standard Proposition Elimination Names.
+
 Module Type ut_term_mod (X: term_sig).
   Import X.
 (** Term syntax:*)

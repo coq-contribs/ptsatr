@@ -16,6 +16,7 @@ Require Import Peano_dec.
 Require Import Compare_dec.
 Require Import Lt Le Gt Plus Minus.
 
+Unset Standard Proposition Elimination Names.
 
 Module PTS_ATR_mod (X:term_sig) (Y:pts_sig X) (TM:term_mod X) (EM: env_mod X TM) (RM: red_mod X TM).
  Import X Y TM EM RM.

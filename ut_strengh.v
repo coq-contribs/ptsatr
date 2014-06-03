@@ -18,6 +18,8 @@ Require Import ut_typ.
 Require Import ut_sr. 
 Require Import List Le Lt Gt.
 
+Unset Standard Proposition Elimination Names.
+
 Module ut_strengh_mod (X:term_sig) (Y:pts_sig X) (TM:ut_term_mod X) (EM:ut_env_mod X TM) (RM: ut_red_mod X TM).
  Include (ut_sr_mod X Y TM EM RM).
   Import X Y TM EM RM.

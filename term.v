@@ -15,6 +15,8 @@ Require Import Minus.
 Require Import Bool.
 Require Import base.
 
+Unset Standard Proposition Elimination Names.
+
 (** Term syntax. Notice the two additional [Term] in the application.*)
 Module Type term_mod (X:term_sig).
 Import X.

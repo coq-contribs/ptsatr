@@ -16,6 +16,8 @@ Require Import Plus Minus.
 Require Import ut_typ.
 Require Import ut_sr.
 
+Unset Standard Proposition Elimination Names.
+
 Module Type ut_typ_eq_mod (X:term_sig) (Y:pts_sig X) (TM:ut_term_mod X) (EM:ut_env_mod X TM) (RM: ut_red_mod X TM)
  (SRM: ut_sr_mod X Y TM EM RM).
  Import X Y TM EM RM SRM.

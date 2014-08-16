@@ -1,4 +1,4 @@
-(** * Final Result : PTS <-> PTSe 
+(** * Final Result : PTS <-> PTSe
 Here we use PTS_{atr} as an intermediate system to prove that any judgement in PTS
 can be lifted in PTSe, which means that we can build a valid equality judgement
 from a Beta conversion.
@@ -25,7 +25,7 @@ Require Import glue.
 Require Import List.
 Require Import strip.
 
-Module final_mod  (X:term_sig) (Y:pts_sig X) 
+Module final_mod  (X:term_sig) (Y:pts_sig X)
   (TM:term_mod X) (EM: env_mod X TM) (RM: red_mod X TM)
   (UTM:ut_term_mod X) (UEM: ut_env_mod X UTM) (URM: ut_red_mod X UTM)
   (PTS : ut_sr_mod X Y UTM UEM URM) (PTSe : ut_typ_eq_mod X Y UTM UEM URM PTS)
@@ -34,9 +34,9 @@ Module final_mod  (X:term_sig) (Y:pts_sig X)
 
 Open Scope Typ_scope.
 
-(** Now that we know how to glue types and contexts together, we can 
+(** Now that we know how to glue types and contexts together, we can
 annotate a PTS judgement into a PTS_{atr} one.*)
-Lemma FromPTS_to_PTSATR : (forall Γ  M A , PTS.typ Γ M A -> exists Γ', exists M', exists A', strip_env Γ' = Γ /\ 
+Lemma FromPTS_to_PTSATR : (forall Γ  M A , PTS.typ Γ M A -> exists Γ', exists M', exists A', strip_env Γ' = Γ /\
   strip M' = M /\ strip A' = A /\ Γ' ⊢ M' ▹ M' : A') /\
         (forall Γ , PTS.wf Γ -> exists Γ', strip_env Γ' = Γ /\ wf Γ').
 apply PTS.typ_induc; intros.
@@ -46,7 +46,7 @@ destruct H as (ΓΓ & ? & ?). assert (exists AA, AA ↓ v ⊂ ΓΓ /\ A = strip 
 clear w H0. revert ΓΓ A v H i. induction Γ; intros. destruct i as ( a & ? &?).
 inversion H1. destruct ΓΓ; simpl in H. discriminate. injection H; intros; subst; clear H.
 destruct i as (a &? & ?). inversion H0; subst; clear H0. exists (lift_rec 1 0 t).
-split. exists t. intuition. rewrite strip_lift; trivial. 
+split. exists t. intuition. rewrite strip_lift; trivial.
 destruct (IHΓ ΓΓ (UTM.lift_rec (S n) 0 a) n) as (B & ?& ?). trivial.
 exists a; intuition. exists (lift_rec 1 0 B). split. destruct H as (b & ?& ?).
 exists b. subst. rewrite lift_lift; intuition. rewrite strip_lift. rewrite <- H0.
@@ -71,11 +71,11 @@ apply r. trivial. eapply ErasedContextSwitch. apply H3. econstructor. apply H4. 
 destruct (typ_wf (t3 :: Γm)  M' M' B' H5). destruct H0; subst. simpl in H2; destruct Mb; try discriminate.
 simpl in H2. injection H2; intros; subst; clear H2. eapply ErasedContextSwitch. apply H5.  econstructor. apply H4.
 simpl. rewrite H1; rewrite H; trivial. destruct H0 as ( x & ?).
-eapply ErasedContextSwitch. apply typ_pcompat with B'. apply H5. eapply ErasedTypeConversion. trivial. apply H0. 
+eapply ErasedContextSwitch. apply typ_pcompat with B'. apply H5. eapply ErasedTypeConversion. trivial. apply H0.
 eapply ErasedContextSwitch. apply H3. apply wf_from_typ in H0; trivial. simpl. rewrite H7; rewrite H1; rewrite H6; rewrite H; trivial.
 econstructor. apply H4. simpl. rewrite H1; rewrite H; trivial.
 (**)
-destruct H as (Γm & Mm & Tm & ? & ? & ? &?). destruct Tm; simpl in *; try discriminate. 
+destruct H as (Γm & Mm & Tm & ? & ? & ? &?). destruct Tm; simpl in *; try discriminate.
 injection H2; intros; subst; clear H2. destruct H0 as (Γn & Mn & Tn &? & ? & ?& ?).
 exists Γm; exists (App Mm Tm1 Tm2 Mn); exists (Tm2  [ ← Mn]); intuition.
 subst. simpl. trivial. rewrite strip_subst. subst. trivial.
@@ -97,15 +97,16 @@ apply L33' in b. destruct b as ( n & ? & ?). destruct n; simpl in H; try discrim
 injection H; intros; subst; clear H.
 exists Γ'; exists M' ; exists B'; intuition. apply typ_pcompat with !a.
 trivial. apply typ_peq_sym. apply reds_to_conv with s.
-apply SR_trans' with B'; trivial. eapply ErasedContextSwitch. apply H6. apply wf_from_typ in H3; trivial. trivial.
+apply SR_trans'; trivial. eapply ErasedContextSwitch. apply H6.
+apply wf_from_typ in H3; trivial. trivial.
 destruct H as (sA' & ?). apply URM.Betac_confl in b as (C & ?& ?).
 apply L33' in H1 as (C0 & ? & ?). apply L33' in H2 as (C1 & ? & ?).
 exists Γ'; exists M'; exists B'; intuition. eapply typ_pcompat with A'.
-trivial. assert (Γ' ⊢ A' ▹▹ C0 : !sA').   apply SR_trans' with A'. trivial. trivial.
-assert (Γ' ⊢ B' ▹▹ C1 : !s).   apply SR_trans' with B'. trivial. eapply ErasedContextSwitch.
+trivial. assert (Γ' ⊢ A' ▹▹ C0 : !sA').   apply SR_trans'. trivial. trivial.
+assert (Γ' ⊢ B' ▹▹ C1 : !s).   apply SR_trans'. trivial. eapply ErasedContextSwitch.
 apply H6. apply wf_from_typ in H3; trivial. trivial. apply typ_peq_trans with C0.
 apply reds_to_conv with sA'; trivial.  apply typ_peq_trans with C1.
-eapply ErasedTypeConversion. rewrite H1. rewrite H2. trivial. apply reds_refl_rt in H7; apply H7. 
+eapply ErasedTypeConversion. rewrite H1. rewrite H2. trivial. apply reds_refl_rt in H7; apply H7.
 apply reds_refl_rt in H8; apply H8.  apply typ_peq_sym.
 apply reds_to_conv with s; trivial.
 (* wf *)
@@ -175,7 +176,7 @@ apply PTS.Cnv with ((strip B)[← strip N'])%UT s2. intuition. apply PTS.cApp wi
 change (!s2)%UT with (!s2[← strip N])%UT. eapply PTS.substitution. apply H0. apply H2. constructor. eauto.
 intuition.
 (**)
-destruct H as (? & ?& ?), H0 as (? & ?& ?), H1 as (? & ? & ?), H2 as (? & ?& ?), H3 as (? & ?& ?),  
+destruct H as (? & ?& ?), H0 as (? & ?& ?), H1 as (? & ? & ?), H2 as (? & ?& ?), H3 as (? & ?& ?),
   H4 as (? & ?& ?), H5 as (? & ?& ?).
 split. rewrite strip_subst. apply PTS.cApp with (strip A). apply PTS.cLa with s1 s2 s3; trivial. trivial.
 split. rewrite 2! strip_subst. apply PTS.Cnv with ((strip B)[← strip N'])%UT s2. intuition. eapply PTS.substitution.
@@ -188,7 +189,7 @@ split. apply PTS.Cnv with (strip A) s; trivial. split. apply PTS.Cnv with (strip
 (**)
 destruct H as (? & ? & ?), H0 as (? & ?& ?).
 split. apply PTS.Cnv with (strip B) s; intuition. split. apply PTS.Cnv with (strip B) s; intuition. trivial.
-(* reds *) 
+(* reds *)
 eauto.
 (**)
 destruct H as (? & ? & ?), H0 as ( ? & ?& ?); eauto.
@@ -210,17 +211,24 @@ intuition.
 (**)
 apply cPi_eq with s1 s2; trivial.
 (**)
-apply cLa_eq with s1 s2 s3; trivial. change (strip A::strip_env Γ) with( nil++strip A::strip_env Γ).
-eapply PTSe.conv_in_env. apply left_reflexivity in H0. apply H0. simpl; reflexivity. constructor.
-apply left_reflexivity in H. apply H. apply left_reflexivity   with (strip A'); trivial.
+apply cLa_eq with s1 s2 s3; trivial.
+change (strip A::strip_env Γ) with( nil++strip A::strip_env Γ).
+eapply PTSe.conv_in_env. apply left_reflexivity in H0. apply H0.
+simpl; reflexivity. apply cRefl.
+apply left_reflexivity in H. apply H.
+apply left_reflexivity   with (strip A'); trivial.
 (**)
 rewrite strip_subst. apply cApp_eq with (strip A). trivial. trivial.
 (**)
-rewrite 2! strip_subst. apply cTrans with ((strip M)[← strip N])%UT. apply cBeta with s1 s2 s3; trivial.
-apply left_reflexivity with (strip A'); trivial. apply left_reflexivity with (strip B'); trivial.
-apply left_reflexivity with (strip M'); trivial. apply left_reflexivity with (strip N'); trivial.
-apply cTrans with ((strip M')[← strip N])%UT. eapply substitution. apply H4. apply left_reflexivity in H5; apply H5.
-constructor. eapply substitution2. apply right_reflexivity in H4; apply H4. apply H5. apply left_reflexivity with (strip N'); trivial.
+apply cTrans with ((strip M)[← strip N])%UT. rewrite !strip_subst.
+apply cBeta with s1 s2 s3; trivial.
+apply left_reflexivity with (strip A); trivial.
+apply left_reflexivity with (strip B); trivial.
+apply left_reflexivity with (strip M'); trivial.
+apply left_reflexivity with (strip N'); trivial.
+rewrite !strip_subst.
+eapply parallel_subst.
+apply H4. apply H5.
 constructor.
 (**)
 apply Cnv_eq with (strip A) s; trivial.
@@ -228,7 +236,7 @@ apply Cnv_eq with (strip A) s; trivial.
 apply Cnv_eq with (strip B) s; intuition.
 (* reds *)
 eauto.
-(**) 
+(**)
 eauto.
 (* wf *)
 trivial.
@@ -257,10 +265,12 @@ intros. split; intros.
 apply FromPTSe_to_PTS in H. trivial.
 destruct H as ( ? & ?& ?).  apply Betac_confl in H1 as (P & ?& ?). apply cTrans with P.
 apply FromPTS_to_PTSATR in H as (Γ1 & M1 & T1 & ? & ? & ?& ?).  destruct (L33' M1 P) as (P1 & ? & ?).
-rewrite H3; trivial. subst. apply FromPTSATR_to_PTSe_trans. apply SR_trans' with M1; trivial.
+rewrite H3; trivial. subst. apply FromPTSATR_to_PTSe_trans.
+apply SR_trans'; trivial.
 apply cSym.
 apply FromPTS_to_PTSATR in H0 as (Γ1 & N1 & T1 & ? & ? & ?& ?).  destruct (L33' N1 P) as (P1 & ? & ?).
-rewrite H3; trivial. subst. apply FromPTSATR_to_PTSe_trans. apply SR_trans' with N1; trivial.
+rewrite H3; trivial. subst. apply FromPTSATR_to_PTSe_trans.
+apply SR_trans'; trivial.
 Qed.
 
 
@@ -270,10 +280,10 @@ Print Assumptions PTS_equiv_PTSe.
 (* Now, we just have to import the Subject Reduction property from PTS
 to PTSe. *)
 Lemma PTSe_SR : forall Γ M N T, Γ ⊢e M : T -> (M → N)%UT -> Γ ⊢e M = N : T.
-intros. 
+intros.
 apply FromPTSe_to_PTS in H.
 apply FromPTS_to_PTSATR in  H as (Γ' & M' & T' & ? & ? & ? & ?).
-subst. apply L33 in H0 as (N' & ? & ?). subst. 
+subst. apply L33 in H0 as (N' & ? & ?). subst.
 apply FromPTSATR_to_PTSe_trans. eapply SR_trans'.
 intuition. apply H3.
 Qed.
@@ -281,7 +291,7 @@ Qed.
 Lemma PTSe_SR_trans : forall Γ M N T, Γ ⊢e M : T -> (M →→ N)%UT -> Γ ⊢e M = N : T.
 intros.
 induction H0.
-intuition.
+now apply cRefl.
 apply PTSe_SR; trivial.
 assert (Γ ⊢e M = N : T). intuition.
 apply cTrans with N. trivial.

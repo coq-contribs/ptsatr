@@ -11,6 +11,7 @@ Require Import Peano_dec.
 Require Import Compare_dec.
 Require Import Lt.
 
+
 Require Import base.
 Require Import ut_term.
 Require Import ut_red.
@@ -263,12 +264,12 @@ apply FromPTSe_to_PTS in H. trivial.
 intros. split; intros.
 apply FromPTSe_to_PTS in H. trivial.
 destruct H as ( ? & ?& ?).  apply Betac_confl in H1 as (P & ?& ?). apply cTrans with P.
-apply FromPTS_to_PTSATR in H as (Γ1 & M1 & T1 & ? & ? & ?& ?).  destruct (L33' M1 P) as (P1 & ? & ?). 
-rewrite H4; trivial. subst. apply FromPTSATR_to_PTSe_trans.
+apply FromPTS_to_PTSATR in H as (Γ1 & M1 & T1 & ? & ? & ?& ?).  destruct (L33' M1 P) as (P1 & ? & ?).
+rewrite H3; trivial. subst. apply FromPTSATR_to_PTSe_trans.
 apply SR_trans'; trivial.
 apply cSym.
 apply FromPTS_to_PTSATR in H0 as (Γ1 & N1 & T1 & ? & ? & ?& ?).  destruct (L33' N1 P) as (P1 & ? & ?).
-rewrite H4; trivial. subst. apply FromPTSATR_to_PTSe_trans.
+rewrite H3; trivial. subst. apply FromPTSATR_to_PTSe_trans.
 apply SR_trans'; trivial.
 Qed.
 
@@ -284,7 +285,7 @@ apply FromPTSe_to_PTS in H.
 apply FromPTS_to_PTSATR in  H as (Γ' & M' & T' & ? & ? & ? & ?).
 subst. apply L33 in H0 as (N' & ? & ?). subst.
 apply FromPTSATR_to_PTSe_trans. eapply SR_trans'.
-intuition. apply H4.
+intuition. apply H3.
 Qed.
 
 Lemma PTSe_SR_trans : forall Γ M N T, Γ ⊢e M : T -> (M →→ N)%UT -> Γ ⊢e M = N : T.

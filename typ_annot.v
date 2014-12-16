@@ -24,9 +24,9 @@ Module PTS_ATR_mod (X:term_sig) (Y:pts_sig X) (TM:term_mod X) (EM: env_mod X TM)
 (** PTS_{atr} typind definition: we define at the same time the
  one step and the multistep in order to keep track of some well-typed path
  between two possible domains in the typ_beta case.*)
-Reserved Notation "Γ ⊢ s ▹ t : A" (at level 80, s, t, T at level 30, no associativity) .
+Reserved Notation "Γ ⊢ s ▹ t : A" (at level 80, s, t, A at level 30, no associativity) .
 Reserved Notation "Γ ⊣ " (at level 80, no associativity).
-Reserved Notation "Γ ⊢ s ▹▹ t : T " (at level 80, s, t, T at level 30, no associativity) .
+Reserved Notation "Γ ⊢ s ▹▹ t : A" (at level 80, s, t, A at level 30, no associativity) .
 
 Inductive wf : Env -> Prop :=
   | wf_nil : nil ⊣
@@ -262,7 +262,7 @@ Qed.
 functional, we can't inforce the fact that every step is typed by the same type.
   But we only need the equality at the type level, so we will check that every
   step is welltyped, by a sort, but we will forget about this sort.*)
-Reserved Notation "Γ ⊢ s ≡' t " (at level 80, s, t, T at level 30, no associativity) .
+Reserved Notation "Γ ⊢ s ≡' t " (at level 80, s, t at level 30, no associativity) .
 
 Inductive typ_peq : Env -> Term -> Term  -> Prop :=
  | typ_peq_intro : forall Γ A B s, Γ ⊢ A ▹ B : !s -> Γ ⊢ A ≡' B

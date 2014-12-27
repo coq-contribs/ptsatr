@@ -17,6 +17,7 @@ Require Import ut_env.
 Require Import ut_typ.
 Require Import ut_sr. 
 Require Import List Le Lt Gt.
+Require Compare_dec Peano_dec.
 
 Unset Standard Proposition Elimination Names.
 
@@ -62,7 +63,7 @@ end.
 
 Hint Constructors Tv Ts.
 
-Require Import Compare_dec Peano_dec.
+Import Compare_dec Peano_dec.
 (** Some basic properties of [Tv] and [Ts]. *)
 Lemma Tv_lift : forall M n m, Tv M <-> Tv (M ↑ n # m).
 induction M; split; simpl in *; intros; intuition.

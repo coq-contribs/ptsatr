@@ -310,7 +310,7 @@ elim (lt_irrefl i). apply lt_trans with (S (i+j)); intuition. apply lt_trans wit
 simpl. subst. destruct (lt_eq_lt_dec i i) as [[] | ].
 elim (lt_irrefl i); trivial. apply substP2; intuition.
 elim (lt_irrefl i); trivial.
-subst. rewrite plus_comm in e0. apply succ_plus_discr in e0. elim e0.
+subst v. rewrite plus_comm in e0. apply succ_plus_discr in e0. elim e0.
 subst. elim (lt_irrefl i). apply le_lt_trans with (i+j); intuition.
 simpl.
 destruct (lt_eq_lt_dec (v-1) (i+j)) as  [[] | ]. destruct (lt_eq_lt_dec v i) as [[] | ].

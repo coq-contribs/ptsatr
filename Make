@@ -1,6 +1,19 @@
 -R . PTSATR
+
 base.v
-ut_term.v ut_env.v ut_red.v ut_typ.v ut_sr.v ut_typ_eq.v ut_strengh.v 
-term.v env.v red.v  
-strip.v typ_annot.v glue.v
-final_result.v counter_ex.v ut_typ_eq_inj.v
+ut_term.v
+ut_env.v
+ut_red.v
+ut_typ.v
+ut_sr.v
+ut_typ_eq.v
+ut_strengh.v
+term.v
+env.v
+red.v  
+strip.v
+typ_annot.v
+glue.v
+final_result.v
+counter_ex.v
+ut_typ_eq_inj.v
